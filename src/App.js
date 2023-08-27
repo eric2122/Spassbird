@@ -8,10 +8,18 @@ import { Route, Routes } from 'react-router-dom';
 import LoginPage from './components/auth/LoginPage';
 import RegisterPage from './components/auth/RegisterPage';
 import Contacts from './components/contacts/Contacts';
+import awsExports from './aws-exports';
+import {Amplify} from 'aws-amplify';
+import {Authenticator} from '@aws-amplify/ui-react';
+import '@aws-amplify/ui-react/styles.css';
+
+Amplify.configure(awsExports);
 
 function App() {
   return (
-    <div>
+    <Authenticator login-Mechanisms={['email']} > 
+    {({signOut,user}) => (
+    <div>  
     
         <SiteNav/>
         <Routes>
@@ -25,6 +33,9 @@ function App() {
         
      
     </div>
+    ) }
+    </Authenticator>
+
   );
 }
 
