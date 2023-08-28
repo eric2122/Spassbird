@@ -3,8 +3,15 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import { hover } from '@testing-library/user-event/dist/hover';
+import {FaStar} from 'react-icons/fa'
+import { useState } from 'react';
 
 export default function Contacts() {
+
+        const [rating , setRating]= useState(null);
+        const [hover , setHover] = useState(null);
+
   return (
     <Container>
     <Row className="px-4 my-5">
@@ -19,7 +26,29 @@ export default function Contacts() {
                 <Card.Text>
                 Some quick example text to build on the card title and make up the
                 bulk of the card's content.
-                <br/>stars
+                <div className='starRating'>
+                {[...Array(5)].map((star,index) => {
+                    const currentRating = index + 1 ;
+                    return (
+                        <label >
+                            <input 
+                            type="radio"
+                            name='rating'
+                            value={currentRating}
+                            onClick={()=> setRating(currentRating)}
+                             />
+                             <FaStar
+                             className='star'
+                             size={30}
+                             color ={currentRating <= (hover || rating) ? "#ffc107" : "#e4e5e9" }
+                             onMousEnter={()=> setHover(currentRating)}
+                             onMousLeave={()=> setHover(null)}
+                             />
+                        </label>
+                    );
+                })}
+                <p>your rating is {rating}</p>
+                </div>
                 </Card.Text>
                 <Button variant="primary">Go somewhere</Button>
             </Card.Body>
