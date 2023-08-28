@@ -3,6 +3,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
 import Button from 'react-bootstrap/Button';
+import { Link } from 'react-router-dom';
 
 function HomePage (){
     return (
@@ -24,7 +25,10 @@ function HomePage (){
                         Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
                         Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                     </p>
-                    <Button variant="outline-primary">Get Started &gt;&gt;</Button>
+                    
+                    <Link to={{pathname:'/contacts'}}>
+                    <Button variant="outline-primary">View contacts &gt;&gt;</Button>
+                    </Link>
                 </Col>
             </Row>
         </Container>
