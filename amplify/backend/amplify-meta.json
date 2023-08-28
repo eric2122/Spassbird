@@ -1,0 +1,58 @@
+{
+  "providers": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-spassvogel-dev-170839-authRole",
+      "UnauthRoleArn": "arn:aws:iam::117995874887:role/amplify-spassvogel-dev-170839-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::117995874887:role/amplify-spassvogel-dev-170839-authRole",
+      "Region": "eu-central-1",
+      "DeploymentBucketName": "amplify-spassvogel-dev-170839-deployment",
+      "UnauthRoleName": "amplify-spassvogel-dev-170839-unauthRole",
+      "StackName": "amplify-spassvogel-dev-170839",
+      "StackId": "arn:aws:cloudformation:eu-central-1:117995874887:stack/amplify-spassvogel-dev-170839/9b191660-44eb-11ee-8037-0aab2ec978c6",
+      "AmplifyAppId": "d2ja606fvd2z0i"
+    }
+  },
+  "auth": {
+    "spassvogel739bd3a3": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false,
+      "frontendAuthConfig": {
+        "socialProviders": [],
+        "usernameAttributes": [
+          "EMAIL"
+        ],
+        "signupAttributes": [
+          "EMAIL"
+        ],
+        "passwordProtectionSettings": {
+          "passwordPolicyMinLength": 8,
+          "passwordPolicyCharacters": []
+        },
+        "mfaConfiguration": "OFF",
+        "mfaTypes": [
+          "SMS"
+        ],
+        "verificationMechanisms": [
+          "EMAIL"
+        ]
+      },
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-spassvogel-dev-170839-deployment/amplify-cfn-templates/auth/spassvogel739bd3a3-cloudformation-template.json",
+        "logicalId": "authspassvogel739bd3a3"
+      },
+      "lastPushTimeStamp": "2023-08-27T15:16:34.525Z",
+      "output": {
+        "UserPoolId": "eu-central-1_XR3yvQhX7",
+        "AppClientIDWeb": "vefcl8nkjeo7a3fvqkso6ro5n",
+        "AppClientID": "6r77j305d1rm28huce61ifspp3",
+        "IdentityPoolId": "eu-central-1:dcb7e41d-9a6f-41bb-8abc-a9a5bd6b43c4",
+        "UserPoolArn": "arn:aws:cognito-idp:eu-central-1:117995874887:userpool/eu-central-1_XR3yvQhX7",
+        "IdentityPoolName": "spassvogel739bd3a3_identitypool_739bd3a3__dev",
+        "UserPoolName": "spassvogel739bd3a3_userpool_739bd3a3"
+      },
+      "lastPushDirHash": "Q/daAxPI9OFA9J7Xu/j3FNtLnbQ="
+    }
+  }
+}
