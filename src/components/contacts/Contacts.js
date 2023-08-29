@@ -54,15 +54,15 @@ export default function Contacts() {
                 const { name, email, cell } = contactData;
     
                 // Upload pic to S3
-                Storage.configure({ region: 'us-east-1' });
-                // const { key } = await Storage.put(`${uuid()}.png`, profilePic, {contentType: 'image/png'});
+                Storage.configure({ region: 'eu-central-1' });
+                const { key } = await Storage.put(`${uuid()}.png`, profilePic, {contentType: 'image/png'});
     
                 const newContact = {
                     id: uuid(),
                     name,
                     email,
                     cell,
-                    profilePicPath: "sample"
+                    profilePicPath: key
                 };
     
                 // Persist new Contact
@@ -144,11 +144,11 @@ export default function Contacts() {
                                     value={contactData.cell} 
                                     onChange={evt => setContactData({...contactData, cell:evt.target.value})} />
                 </Form.Group>
-                {/* <Form.Group className="mb-3" controlId="formBasicText">
+                <Form.Group className="mb-3" controlId="formBasicText">
                     <Form.Label>Profile Pic</Form.Label>
                     <Form.Control type="file" accept="image/png" 
                                     onChange={evt => setProfilePic(evt.target.files[0])} />
-                </Form.Group> */}
+                </Form.Group>
                 <Button variant="primary" type="button" onClick={addNewContact}>Add Contact &gt;&gt;</Button>&nbsp;                        
             </Form>
         </Col>
