@@ -3,7 +3,6 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-import { hover } from '@testing-library/user-event/dist/hover';
 import {FaStar} from 'react-icons/fa'
 import { useState ,useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
@@ -54,15 +53,15 @@ export default function Contacts() {
                 const { name, email, cell } = contactData;
     
                 // Upload pic to S3
-                Storage.configure({ region: 'us-east-1' });
-                // const { key } = await Storage.put(`${uuid()}.png`, profilePic, {contentType: 'image/png'});
+                Storage.configure({ region: 'eu-central-1' });
+                 const { key } = await Storage.put(`${uuid()}.png`, profilePic, {contentType: 'image/png'});
     
                 const newContact = {
                     id: uuid(),
                     name,
                     email,
                     cell,
-                    profilePicPath: "sample"
+                    profilePicPath: key
                 };
     
                 // Persist new Contact
@@ -83,7 +82,9 @@ export default function Contacts() {
             return (
         <Col className="px-2 my-2" key={indx}>
         <Card style={{ width: '12rem' }}>
-            <Card.Img variant="top" src={profilePicPaths[indx]} />
+        <Card.Img 
+            src={profilePicPaths[indx]}
+            variant="top" />
             <Card.Body>
                 <Card.Title>{contact.name} </Card.Title>
                 <Card.Text>
@@ -144,11 +145,11 @@ export default function Contacts() {
                                     value={contactData.cell} 
                                     onChange={evt => setContactData({...contactData, cell:evt.target.value})} />
                 </Form.Group>
-                {/* <Form.Group className="mb-3" controlId="formBasicText">
+                <Form.Group className="mb-3" controlId="formBasicText">
                     <Form.Label>Profile Pic</Form.Label>
                     <Form.Control type="file" accept="image/png" 
                                     onChange={evt => setProfilePic(evt.target.files[0])} />
-                </Form.Group> */}
+                </Form.Group>
                 <Button variant="primary" type="button" onClick={addNewContact}>Add Contact &gt;&gt;</Button>&nbsp;                        
             </Form>
         </Col>
