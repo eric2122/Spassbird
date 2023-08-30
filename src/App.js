@@ -11,6 +11,8 @@ import awsExports from './aws-exports';
 import {Amplify} from 'aws-amplify';
 import {Authenticator} from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
+import QuoteApi from './components/jokeApi/QuoteApi';
+import DadJoke from './components/jokeApi/DadJoke';
 
 Amplify.configure(awsExports);
 
@@ -26,6 +28,9 @@ function App() {
           <Route path='/'  exact={true} element={<HomePage/>}/> 
           
           <Route path='/contacts' element={<Contacts/>}/>
+          <Route path='/quote' element={<QuoteApi/>}/>
+          <Route path='/dadjoke' element={<DadJoke/>}/>
+
         </Routes>
         <SiteFooter/>
         

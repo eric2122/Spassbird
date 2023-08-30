@@ -90,7 +90,7 @@ export default function Contacts() {
                 <Card.Text>
                 {contact.email}
                 <br />{contact.cell}
-                <div className='starRating' >
+                <div className='starRating' key={indx} >
                 {[...Array(5)].map((star,index) => {
                     const currentRating = index + 1 ;
                     return (
