@@ -1,10 +1,10 @@
-import React , {useState} from 'react';
+import React , {useState , useEffect} from 'react';
 import {v4 as uuid} from 'uuid';
 import {API , graphqlOperation } from 'aws-amplify' ;
 import {createContact} from '../../graphql/mutations';
 
 
-export default function JokeApi() {
+export default function QuoteApi() {
 
     const [jokes,setJokes] = useState ("");
     
@@ -16,6 +16,10 @@ export default function JokeApi() {
             setJokes(data[randumNum]);
         });
     }
+
+    useEffect(() => {
+        getJokes();
+    },[]);
 
     const addNewContact = async () => {
         try {
@@ -43,8 +47,8 @@ export default function JokeApi() {
     <div>
         {jokes.text}
         {jokes.author}
-        <button onClick={getJokes}> Get Joke</button>
-        <button onClick={addNewContact}>Add joke &gt;&gt;</button>&nbsp; 
+        <button onClick={getJokes}> Get quote</button>
+        <button onClick={addNewContact}>Add quote &gt;&gt;</button>&nbsp; 
     </div>
 
   )

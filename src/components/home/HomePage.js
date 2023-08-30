@@ -30,8 +30,11 @@ function HomePage (){
                     <Button variant="outline-primary">View contacts &gt;&gt;</Button>
                     </Link>
                     
-                    <Link to={{pathname:'/jokes'}}>
-                    <Button variant="outline-primary">View jokes &gt;&gt;</Button>
+                    <Link to={{pathname:'/quote'}}>
+                    <Button variant="outline-primary">View quote &gt;&gt;</Button>
+                    </Link>
+                    <Link to={{pathname:'/dadjoke'}}>
+                    <Button variant="outline-primary">View Dadjokes &gt;&gt;</Button>
                     </Link>
                 </Col>
             </Row>
