@@ -53,8 +53,8 @@ export default function Contacts() {
                 const { name, email, cell } = contactData;
     
                 // Upload pic to S3
-                Storage.configure({ region: 'eu-central-1' });
-                 const { key } = await Storage.put(`${uuid()}.png`, profilePic, {contentType: 'image/png'});
+                Storage.configure({ region: 'us-east-1' });
+                // const { key } = await Storage.put(`${uuid()}.png`, profilePic, {contentType: 'image/png'});
     
                 const newContact = {
                     id: uuid(),
