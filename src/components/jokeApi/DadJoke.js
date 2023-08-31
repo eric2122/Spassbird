@@ -1,5 +1,9 @@
 import React , {useEffect, useState}from 'react' ;
 import {FaStar} from 'react-icons/fa';
+import {v4 as uuid} from 'uuid';
+import {API , graphqlOperation } from 'aws-amplify' ;
+import {createContact} from '../../graphql/mutations';
+
 
 export default function DadJoke() {
 
@@ -26,7 +30,25 @@ export default function DadJoke() {
     useEffect(() => {
         getJokes();
     },[]); 
+   
+    const addNewContact = async () => {
+        try {
+            const newContact = {
+                id: uuid(),
+                name : jokes,
+                email :"jokes" ,
+                cell : rating,
+                profilePicPath: "joke"
+            };
 
+            
+
+            // Persist new Contact
+            await API.graphql(graphqlOperation(createContact, {input: newContact}));
+        } catch(err) {
+            console.log('error', err);
+        }
+    }
 
   return (
     <div>
@@ -35,7 +57,7 @@ export default function DadJoke() {
                 {[...Array(5)].map((star,index) => {
                     const currentRating = index + 1 ;
                     return (
-                        <label >
+                        <label key={index}>
                             <input 
                             type="radio"
                             name='rating'
@@ -46,15 +68,17 @@ export default function DadJoke() {
                              className='star'
                              size={30}
                              color ={currentRating <= (hover || rating) ? "#ffc107" : "#e4e5e9" }
-                             onMousEnter={()=> setHover(currentRating)}
-                             onMousLeave={()=> setHover(null)}
+                             onMouseEnter={()=> setHover(currentRating)}
+                             onMouseLeave={()=> setHover(null)}
                              />
                         </label>
                     );
                 })}
                 <p>your rating is {rating}</p>
                 </div>
-        <button onClick={getJokes}> Get Joke</button>
+        <button onClick={getJokes}> next Joke</button>
+        
+        <button onClick={addNewContact}>Add Joke &gt;&gt;</button>&nbsp; 
     </div>
   )
 }
