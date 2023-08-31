@@ -1,61 +1,45 @@
-import React  from 'react';
+import React ,{useState , useEffect} from 'react';
+import { listContacts } from '../../graphql/queries';
+import {API , graphqlOperation} from 'aws-amplify' ;
+
 import { PieChart, Pie,CartesianGrid, Tooltip, Legend, BarChart, Bar, XAxis, YAxis } from 'recharts';
 
 
 export default function StaticJokes() {
+    const [contacts, setContacts] = useState([]);
+    
 
-    const data = [
-        {
-          name: 'Page A',
-          value:800000000
-        },
-        {
-          name: 'Page B',
-          value:1000000000 
-        },
-        {
-          name: 'Page C',
-          value:60000000000
-        },
-        {
-          name: 'Page D',
-          value: 30000000000
-        },
-        {
-          name: 'Page E',
-          value: 2000000000000
-        },
-        {
-          name: 'Page F',
-          value:900000000000
-        },
-        {
-          name: 'Page G',
-          value: 7000000000000
-        },
-      ];
+
+
+      const getContacts = async() => {
+        try {
+            const contactsData = await API.graphql(graphqlOperation(listContacts));
+            console.log(contactsData);
+
+            const contactsList = contactsData.data.listContacts.items;
+            setContacts(contactsList);
+
+           
+        } catch(err) {
+            console.log('error', err);
+        }
+    }
+
+    useEffect(() => {
+        getContacts()
+    }, []);
+
+
   return (
-    <div>
+   
         
-          <div>
-          <PieChart width={400} height={400}>
-          <Pie
-            dataKey="value"
-            isAnimationActive={false}
-            data={data}
-            cx="200"
-            cy="200"
-            outerRadius={80}
-            fill="#8884d8"
-            label
-          />
-          <Tooltip />
-          </PieChart>
-
-          <BarChart
+    <div >
+      <h1 style={{textAlign:"center"}}> Top Ten </h1>
+          <div style={{textAlign:"center"}} >
+         <BarChart
           width={500}
           height={300}
-          data={data}
+          data={contacts}
           margin={{
             top: 5,
             right: 30,
@@ -69,7 +53,7 @@ export default function StaticJokes() {
           <Tooltip />
           <Legend />
           <CartesianGrid strokeDasharray="3 3" />
-          <Bar dataKey="value" fill="#8884d8" background={{ fill: '#eee' }} />
+          <Bar dataKey="cell" fill="#8884d8" background={{ fill: '#eee' }} />
         </BarChart>
           </div>
     </div>
