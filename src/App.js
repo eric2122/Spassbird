@@ -13,6 +13,8 @@ import {Authenticator} from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
 import QuoteApi from './components/jokeApi/QuoteApi';
 import DadJoke from './components/jokeApi/DadJoke';
+import StaticJokes from './components/static/StaticJokes';
+
 
 Amplify.configure(awsExports);
 
@@ -30,6 +32,7 @@ function App() {
           <Route path='/contacts' element={<Contacts/>}/>
           <Route path='/quote' element={<QuoteApi/>}/>
           <Route path='/dadjoke' element={<DadJoke/>}/>
+          <Route path='/static' element={<StaticJokes/>}/>
 
         </Routes>
         <SiteFooter/>

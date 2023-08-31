@@ -3,7 +3,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-import {FaStar} from 'react-icons/fa'
+
 import { useState ,useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import {v4 as uuid} from 'uuid';
@@ -15,8 +15,7 @@ import { listContacts } from '../../graphql/queries';
 
 export default function Contacts() {
 
-        const [rating , setRating]= useState(null);
-        const [hover , setHover] = useState(null);
+      
         const [contacts, setContacts] = useState([]);
         const [contactData , setContactData]= useState ({name:"",email:"",cell:""});
         const [profilePic, setProfilePic] = useState("");
@@ -90,29 +89,7 @@ export default function Contacts() {
                 <Card.Text>
                 {contact.email}
                 <br />{contact.cell}
-                <div className='starRating' key={indx} >
-                {[...Array(5)].map((star,index) => {
-                    const currentRating = index + 1 ;
-                    return (
-                        <label >
-                            <input 
-                            type="radio"
-                            name='rating'
-                            value={currentRating}
-                            onClick={()=> setRating(currentRating)}
-                             />
-                             <FaStar
-                             className='star'
-                             size={30}
-                             color ={currentRating <= (hover || rating) ? "#ffc107" : "#e4e5e9" }
-                             onMousEnter={()=> setHover(currentRating)}
-                             onMousLeave={()=> setHover(null)}
-                             />
-                        </label>
-                    );
-                })}
-                <p>your rating is {rating}</p>
-                </div>
+                
                 </Card.Text>
                 <Button variant="primary">Go somewhere</Button>
             </Card.Body>
