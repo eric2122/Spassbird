@@ -8,7 +8,7 @@ import { useState ,useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import {v4 as uuid} from 'uuid';
 import {API , graphqlOperation , Storage} from 'aws-amplify' ;
-import {createContact} from '../../graphql/mutations';
+import {createContact , updateContact , deleteContact} from '../../graphql/mutations';
 import { listContacts } from '../../graphql/queries';
 
 
@@ -20,6 +20,7 @@ export default function Contacts() {
         const [contactData , setContactData]= useState ({name:"",email:"",cell:""});
         const [profilePic, setProfilePic] = useState("");
         const [profilePicPaths, setProfilePicPaths] = useState([]);
+        const [showForm , setShowForm ] = useState (false) ;
 
         const getContacts = async() => {
             try {
@@ -70,12 +71,55 @@ export default function Contacts() {
             }
         }
 
+    const editContent = async (contact) => {
+
+            // Implement your edit logic here
+        const updatedContact = {
+            id: contact.id,
+            name: 'Updated Name',
+            email: 'updated@email.com',
+            cell: 'updated-cell',
+            profilePicPath: 'new/path/to/pic.jpg',
+        };
+    
+        try {
+            await API.graphql({
+            query: updateContact,
+            variables: { input: updatedContact },
+            });
+    
+            // Handle success or update state as needed
+        } catch (err) {
+            // Handle error
+            console.log('error', err);
+        }
+    };
+
+    const deleteContent = async (contact) => {
+        // Implement your delete logic here
+        const deleteInput = { id: contact.id };
+
+        try {
+        await API.graphql({
+            query: deleteContact,
+            variables: { input: deleteInput },
+        });
+
+        // Handle success or update state as needed
+        } catch (err) {
+        // Handle error
+        console.log('error', err);
+        
+        }
+    };
+
   return (
     <Container>
     <Row className="px-4 my-5">
         <Col><h1>Jokes</h1></Col>
+        <Col> <button onClick={()=> setShowForm(true)}> Add Joke </button> </Col>
     </Row>
-    <Row  >
+    <Row style={{display: "flex"}} >
         {
         contacts.map((contact, indx ) => {
             return (
@@ -91,7 +135,11 @@ export default function Contacts() {
                 <br />{contact.cell}
                 
                 </Card.Text>
-                <Button variant="primary">Go somewhere</Button>
+                <div style={{ display: "flex", gap: "10px" }}>
+                <Button variant="primary" onClick={()=> {editContent(contact)}}> edit </Button> 
+                <Button variant="primary" onClick={()=> {deleteContent(contact)}}> delete </Button>
+                </div>
+                
             </Card.Body>
         </Card>
 
@@ -100,7 +148,7 @@ export default function Contacts() {
             })  
         }
     </Row>
-    <Row className="px-4 my-5">
+    {showForm && (<Row className="px-4 my-5">
         <Col sm={3}>
             <h2>Add New Contact</h2>
             <Form>
@@ -130,7 +178,7 @@ export default function Contacts() {
                 <Button variant="primary" type="button" onClick={addNewContact}>Add Contact &gt;&gt;</Button>&nbsp;                        
             </Form>
         </Col>
-    </Row>
+    </Row>)}
     </Container>
   )
 }
