@@ -22,31 +22,39 @@ export default function Contacts() {
         const [profilePicPaths, setProfilePicPaths] = useState([]);
         const [showForm , setShowForm ] = useState (false) ;
 
-        const getContacts = async() => {
+        
+
+        const getContacts = async () => {
             try {
-                const contactsData = await API.graphql(graphqlOperation(listContacts));
-                console.log(contactsData);
-    
-                const contactsList = contactsData.data.listContacts.items;
-                setContacts(contactsList);
-    
-                contacts.map(async (contact, indx) => {
-                    const contactProfilePicPath = contacts[indx].profilePicPath;
-                    try {
-                        const contactProfilePicPathURI = await Storage.get(contactProfilePicPath, {expires: 60});
-                        setProfilePicPaths([...profilePicPaths, contactProfilePicPathURI]);
-                    } catch(err) {
-                        console.log('error', err);
-                    }
-                });
-            } catch(err) {
-                console.log('error', err);
+              const contactsData = await API.graphql(graphqlOperation(listContacts));
+              console.log(contactsData);
+          
+              const contactsList = contactsData.data.listContacts.items;
+              setContacts(contactsList);
+          
+              // Fetch image paths
+              const promises = contactsList.map(async (contact) => {
+                try {
+                  const contactProfilePicPathURI = await Storage.get(contact.profilePicPath, { expires: 60 });
+                  return contactProfilePicPathURI;
+                } catch (err) {
+                  console.log('error', err);
+                  return null; // Handle the error gracefully
+                }
+              });
+          
+              // Wait for all promises to resolve and filter out any null values
+              const resolvedProfilePicPaths = (await Promise.all(promises)).filter((path) => path !== null);
+              setProfilePicPaths(resolvedProfilePicPaths);
+            } catch (err) {
+              console.log('error', err);
             }
-        }
+          };
+          
     
         useEffect(() => {
-            getContacts()
-        }, []);
+            getContacts() ;
+            }, []);
 
         const addNewContact = async () => {
             try {
@@ -66,20 +74,28 @@ export default function Contacts() {
     
                 // Persist new Contact
                 await API.graphql(graphqlOperation(createContact, {input: newContact}));
+                // After successfully adding the new contact, refresh the contacts
+                await getContacts();
             } catch(err) {
                 console.log('error', err);
             }
         }
 
     const editContent = async (contact) => {
+        const { name, email, cell } = contactData;
+    
+                // Upload pic to S3
+                Storage.configure({ region: 'eu-central-1' });
+                 const { key } = await Storage.put(`${uuid()}.png`, profilePic, {contentType: 'image/png'});
+    
 
             // Implement your edit logic here
         const updatedContact = {
             id: contact.id,
-            name: 'Updated Name',
-            email: 'updated@email.com',
-            cell: 'updated-cell',
-            profilePicPath: 'new/path/to/pic.jpg',
+            name,
+            email ,
+            cell ,
+            profilePicPath: key
         };
     
         try {
@@ -87,7 +103,8 @@ export default function Contacts() {
             query: updateContact,
             variables: { input: updatedContact },
             });
-    
+            // After successfully adding the new contact, refresh the contacts
+            await getContacts();
             // Handle success or update state as needed
         } catch (err) {
             // Handle error
@@ -104,6 +121,8 @@ export default function Contacts() {
             query: deleteContact,
             variables: { input: deleteInput },
         });
+        // After successfully adding the new contact, refresh the contacts
+        await getContacts();
 
         // Handle success or update state as needed
         } catch (err) {
@@ -120,13 +139,15 @@ export default function Contacts() {
         <Col> <button onClick={()=> setShowForm(true)}> Add Joke </button> </Col>
     </Row>
     <Row style={{display: "flex"}} >
+        
         {
         contacts.map((contact, indx ) => {
             return (
         <Col className="px-2 my-2" key={indx}>
         <Card style={{ width: '12rem' }}>
+       
         <Card.Img 
-            src={profilePicPaths[indx]}
+            src={profilePicPaths[indx] || ''}
             variant="top" />
             <Card.Body>
                 <Card.Title>{contact.name} </Card.Title>
