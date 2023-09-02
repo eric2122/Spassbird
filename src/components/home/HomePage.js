@@ -39,6 +39,9 @@ function HomePage (){
                     <Link to={{pathname:'/static'}}>
                     <Button variant="outline-primary">View the best jokes &gt;&gt;</Button>
                     </Link>
+                    {/* <Link to={{pathname:'/top'}}>
+                    <Button variant="outline-primary">View the top jokes &gt;&gt;</Button>
+                    </Link> */}
                 </Col>
             </Row>
         </Container>

@@ -20,8 +20,10 @@ export const listContacts = /* GraphQL */ `
     $filter: ModelContactFilterInput
     $limit: Int
     $nextToken: String
+    
+    
   ) {
-    listContacts(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listContacts(filter: $filter, limit: $limit, nextToken: $nextToken ) {
       items {
         id
         name
@@ -37,3 +39,20 @@ export const listContacts = /* GraphQL */ `
     }
   }
 `;
+// export const listTopContent = `
+// query ListTopContacts {
+//   listTopContacts(
+//     limit: 10, # Limit the results to 10 items
+//     sortDirection: DESC, # Sort in descending order (highest ratings first)
+//     sortBy: "cell" # Sort by the "rating" field
+//   ) {
+//     items {
+//       id
+//       name
+//       cell
+//       profilePicPath
+//     }
+//   }
+// }
+
+// `;
