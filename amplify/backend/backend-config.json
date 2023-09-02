@@ -18,7 +18,7 @@
     }
   },
   "auth": {
-    "spassvogel739bd3a3": {
+    "spassvogela1ca4108": {
       "customAuth": false,
       "dependsOn": [],
       "frontendAuthConfig": {
@@ -43,13 +43,6 @@
       },
       "providerPlugin": "awscloudformation",
       "service": "Cognito"
-    }
-  },
-  "storage": {
-    "contactstorage": {
-      "dependsOn": [],
-      "providerPlugin": "awscloudformation",
-      "service": "S3"
     }
   }
 }

@@ -7,7 +7,7 @@ export type AmplifyDependentResourcesAttributes = {
     }
   },
   "auth": {
-    "spassvogel739bd3a3": {
+    "spassvogela1ca4108": {
       "AppClientID": "string",
       "AppClientIDWeb": "string",
       "IdentityPoolId": "string",
@@ -15,12 +15,6 @@ export type AmplifyDependentResourcesAttributes = {
       "UserPoolArn": "string",
       "UserPoolId": "string",
       "UserPoolName": "string"
-    }
-  },
-  "storage": {
-    "contactstorage": {
-      "BucketName": "string",
-      "Region": "string"
     }
   }
 }
