@@ -1,0 +1,13 @@
+{
+  "resourceName": "huhu",
+  "policyUUID": "5918133c",
+  "bucketName": "hahahahah",
+  "storageAccess": "auth",
+  "guestAccess": [],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ"
+  ],
+  "triggerFunction": "NONE",
+  "groupAccess": {}
+}
